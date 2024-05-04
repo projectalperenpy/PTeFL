@@ -5,7 +5,7 @@ public class mainplayercontroler : MonoBehaviour
     public  Animator animator; // Karakterin Animator bileşeni
     Rigidbody2D rb; // Karakterin Rigidbody2D bileşeni
     Vector3 velocity;
-    float speedAmount = 5f;
+    float speedAmount = 4f;
         
 
     void Start()
