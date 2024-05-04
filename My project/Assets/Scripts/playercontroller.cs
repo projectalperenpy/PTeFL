@@ -1,34 +1,26 @@
 using UnityEngine;
 
-public class mainplayercontroler : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
-    public  Animator animator; // Karakterin Animator bileşeni
-    Rigidbody2D rb; // Karakterin Rigidbody2D bileşeni
-    Vector3 velocity;
-    float speedAmount = 4f;
-        
+    [SerializeField] private float speed;
+    private Rigidbody2D body;
 
-    void Start()
+    private void Awake()
     {
-        // Rigidbody2D bileşenini alıyoruz
-        rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-
+        body = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    private void Update()
     {
-        velocity = new Vector3(Input.GetAxis("Horizontal"), 0f);
-        transform.position += velocity*speedAmount*Time.deltaTime;
-        animator.SetFloat("speed",Mathf.Abs(Input.GetAxis("Horizontal")));
+        float horizontalInput = Input.GetAxis("Horizontal");
+        body.velocity = new Vector3(Input.GetAxis("Horizontal") * speed, body.velocity.y);
 
-        if (Input.GetAxisRaw("Horizontal") == -1)
-        {
-            transform.rotation = Quaternion.Euler(0f,180f,0f);
-        }
-        else if(Input.GetAxisRaw("Horizontal") == 1)
-        {
-           transform.rotation = Quaternion.Euler(0f,0f,0f); 
-        }
+        if (horizontalInput > 0.01f)
+            transform.localScale = Vector3.one;
+        else if (horizontalInput < 0.01f)
+            transform.localScale = new Vector3(-1, 1, 1);
+
+        if (Input.GetKey(KeyCode.Space))
+            body.velocity = new Vector2(body.velocity.x, speed);
     }
 }
