@@ -8,6 +8,11 @@ public class BulletScript : MonoBehaviour
     private Camera mainCam;
     private Rigidbody rb;
     public float force;
+    public GameObject bullet;
+    public Transform bulletTransform;
+    public bool canFire;
+    public float timer;
+    public float timeBetweenFiring;
 
     void Start()
     {
@@ -24,6 +29,20 @@ public class BulletScript : MonoBehaviour
 
     void Update()
     {
-        
+        if (!canFire)
+        {
+            timer += Time.deltaTime;
+            if (timer > timeBetweenFiring)
+            {
+                canFire = true;
+                timer = 0;
+            }
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            canFire = false;
+            Instantiate(bullet, bulletTransform.position, Quaternion.identity);
+        }
     }
 }
