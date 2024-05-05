@@ -4,45 +4,33 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
-    private Vector3 mousePos;
-    private Camera mainCam;
-    private Rigidbody rb;
-    public float force;
-    public GameObject bullet;
-    public Transform bulletTransform;
-    public bool canFire;
-    public float timer;
-    public float timeBetweenFiring;
+    public GameObject bulletPrefab;
+    public Transform bulletSpawnPoint;
+    public float bulletSpeed = 10f;
+    public float timeBetweenShots = 0.5f;
 
-    void Start()
-    {
-        mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        rb = GetComponent<Rigidbody>();
-        mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 direction = mousePos - transform.position;
-        Vector3 rotation = transform.position - mousePos;
-        rb.velocity = new Vector2 (direction.x, direction.y).normalized * force;
-        float rot = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, rot + 90);
-    }
-
+    private float shotCooldown = 0f;
 
     void Update()
     {
-        if (!canFire)
-        {
-            timer += Time.deltaTime;
-            if (timer > timeBetweenFiring)
-            {
-                canFire = true;
-                timer = 0;
-            }
-        }
+        // Atış hızını kontrol et
+        shotCooldown += Time.deltaTime;
 
-        if (Input.GetMouseButton(0))
+        // Sol tıklama yapıldığında ve atış yapılabilecek durumda
+        if (Input.GetMouseButtonDown(0) && shotCooldown >= timeBetweenShots)
         {
-            canFire = false;
-            Instantiate(bullet, bulletTransform.position, Quaternion.identity);
+            FireBullet();
+            shotCooldown = 0f; // Soğuma süresini yeniden başlat
         }
+    }
+
+    private void FireBullet()
+    {
+        // Mermiyi oluştur
+        GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+
+        // Mermiyi ileri doğru itmek için kuvvet uygula
+        Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
+        bulletRb.velocity = bulletSpawnPoint.up * bulletSpeed;
     }
 }
