@@ -15,10 +15,10 @@ public class menucontroller : MonoBehaviour
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Escape)){
-            Resume();
+            Pause();
         } 
         else {
-            Pause();
+            Resume();
         }
             
         
