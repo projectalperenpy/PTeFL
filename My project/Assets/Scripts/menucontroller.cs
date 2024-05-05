@@ -14,7 +14,7 @@ public class menucontroller : MonoBehaviour
     // Start is called before the first frame update
     void Update()
     {
-        if(input.Getkeydown(KeyCode.Escape)){
+        if(Input.GetKeyDown(KeyCode.Escape)){
             Resume();
         } 
         else {
