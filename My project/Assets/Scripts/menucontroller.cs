@@ -11,7 +11,7 @@ public class menucontroller : MonoBehaviour
     public GameObject optionsMenu;
     public GameObject panel;  
     public AudioSource theme;
-    // Start is called before the first frame update
+
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Escape)){
