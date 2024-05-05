@@ -44,9 +44,7 @@ public class menucontroller : MonoBehaviour
     public void SetQuality(int qual){
         QualitySettings.SetQualityLevel(qual);
     }
-    public void SetFullSCreen(bool isfull){
-          Screen.fullScreen = isFull;
-    }
+
     public void SetMusic(bool isMusic){
         theme.mute = !isMusic; 
     }
