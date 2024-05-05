@@ -36,6 +36,9 @@ public class menucontroller : MonoBehaviour
         Time.timeScale = 0f;
         gameIsPaused = true; 
     }
+    public void LoadScene(){
+        SceneManager.LoadScene("Ana Ekran");
+    }
     public void ShowOptions(){
         pausemenu.SetActive(false);
         optionsMenu.SetActive(false);
